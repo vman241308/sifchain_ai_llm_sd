@@ -11,7 +11,7 @@ def create_chat_column():
     #     avatar_images=None
     # )
     with gr.Column():
-        chat = gr.Chatbot(
+        chat_history = gr.Chatbot(
             value=[],
             height=500,
             container=True,
@@ -19,15 +19,18 @@ def create_chat_column():
             label="Chat with AI",
             avatar_images=None,
         )
-        regenerate_btn = gr.Button("Regenerate")
-    return chat, regenerate_btn
+        json_generate_btn = gr.Button("Generate JSON")
+    return chat_history, json_generate_btn
 
 def create_json_column():
-    return gr.Code(
-        value=get_default_json(),
-        language="json",
-        interactive=True,
-        lines=25,
-        elem_classes="code-container",
-        label="Configuration"
-    ) 
+    with gr.Column():
+        json_history = gr.Code(
+            value=get_default_json(),
+            language="json",
+            interactive=True,
+            lines=25,
+            elem_classes="code-container",
+            label="Configuration"
+        )
+        image_generate_btn = gr.Button("Generate Image")
+    return json_history, image_generate_btn

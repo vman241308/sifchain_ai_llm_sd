@@ -6,9 +6,8 @@ from app.core.processor import process_input
 def create_ui():
     with gr.Blocks(theme=gr.themes.Default(), css=custom_css) as interface:
         with gr.Row():
-            chat_component, regenerate_button = create_chat_column()
-            json_component = create_json_column()
-
+            chat_component, json_generate_btn = create_chat_column()
+            json_component, image_generate_btn = create_json_column()
 
         with gr.Row():
             with gr.Column():

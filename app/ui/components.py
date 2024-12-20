@@ -19,7 +19,7 @@ def create_chat_column():
             label="Chat with AI",
             avatar_images=None,
         )
-        regenerate_btn = gr.Button("Regenerate", visible=False)
+        regenerate_btn = gr.Button("Regenerate")
     return chat, regenerate_btn
 
 def create_json_column():

@@ -173,7 +173,7 @@ def format_chat_history():
 
 def process_json():
     canvas_outputs = None
-    llm_generator = chat_fn(history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096)
+    llm_generator = chat_json_fn(history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096)
     
     try:
         if history:

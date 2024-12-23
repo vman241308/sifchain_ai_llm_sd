@@ -5,6 +5,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
 from transformers.generation.stopping_criteria import StoppingCriteriaList
 from threading import Thread
+import canvas as sifchain_canvas
 import json
 
 HF_TOKEN = None
@@ -28,7 +29,7 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
     np.random.seed(int(seed))
     torch.manual_seed(int(seed))
 
-    conversation = [{"role": "system", "content": "You are a helpful assistant."}]
+    conversation = [{"role": "system", "content": sifchain_canvas.system_prompt}]
 
     for user, assistant in history:
         if isinstance(user, str) and isinstance(assistant, str):
@@ -106,3 +107,17 @@ def process_input(content, file):
                 temp_history = []
     
     return paired_history
+
+def process_json():
+    canvas_outputs = None
+    try:
+        if history:
+            history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
+            last_assistant = history[-1][1] if len(history) > 0 else None
+            canvas = sifchain_canvas.Canvas.from_bot_response(last_assistant)
+            canvas_outputs = canvas.process()
+    except Exception as e:
+        print('Last assistant response is not valid canvas:', e)
+
+    # return canvas_outputs, gr.update(visible=canvas_outputs is not None), gr.update(interactive=len(history) > 0)
+    return canvas_outputs

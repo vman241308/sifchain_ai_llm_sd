@@ -1,7 +1,7 @@
 import gradio as gr
 from app.ui.components import create_chat_column, create_json_column
 from app.ui.styles import custom_css
-from app.core.processor import process_input
+from app.core.processor import process_input, process_json
 
 def create_ui():
     with gr.Blocks(theme=gr.themes.Default(), css=custom_css) as interface:
@@ -24,6 +24,11 @@ def create_ui():
             fn=process_input,
             inputs=[input_text, file_upload],
             outputs=[chat_component]
+        )
+
+        json_generate_btn.click(
+            fn=process_json,
+            outputs=[json_component]
         )
 
     return interface 

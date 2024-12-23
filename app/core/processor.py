@@ -5,7 +5,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
 from transformers.generation.stopping_criteria import StoppingCriteriaList
 from threading import Thread
-import canvas as sifchain_canvas
+import app.core.canvas as sifchain_canvas
 import json
 
 HF_TOKEN = None

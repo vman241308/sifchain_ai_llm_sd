@@ -182,6 +182,7 @@ def process_json():
             final_response = ""
             for response_chunk, interrupter in llm_generator:
                 final_response = response_chunk  # This will keep updating until the generator is exhausted
+            print("~~~~~~~~~~~~~~~~~~~final_response:", final_response)
             canvas = sifchain_canvas.Canvas.from_bot_response(final_response)
             print("~~~~~~~~~~~~~~~~~~~canvas:", canvas)
             canvas_outputs = canvas.process()

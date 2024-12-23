@@ -110,16 +110,19 @@ def process_input(content, file):
 
 def process_json():
     canvas_outputs = None
+    print("~~~~~~~~~~~~~~~~~~~history:", history)
     try:
         if history:
-            history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
-            last_assistant = history[-1][1] if len(history) > 0 else None
+            custom_history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
+            print("~~~~~~~~~~~~~~~~~~~custom_history:", custom_history)
+            last_assistant = custom_history[-1][1] if len(custom_history) > 0 else None
+            print("~~~~~~~~~~~~~~~~~~~last_assistant:", last_assistant)
             canvas = sifchain_canvas.Canvas.from_bot_response(last_assistant)
             canvas_outputs = canvas.process()
     except Exception as e:
         print('Last assistant response is not valid canvas:', e)
 
-    print("~~~~~~~~~~~~~~~~~~~", canvas_outputs)
+    print("~~~~~~~~~~~~~~~~~~~canvas_outputs:", canvas_outputs)
 
     # return canvas_outputs, gr.update(visible=canvas_outputs is not None), gr.update(interactive=len(history) > 0)
     return canvas_outputs

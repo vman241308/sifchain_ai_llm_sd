@@ -110,7 +110,7 @@ def process_input(content, file):
 
 def format_chat_history():
     formatted_history = []
-    for i in range(len(history), 2):
+    for i in range(0, len(history), 2):
         if i + 1 < len(history):
             user_content = history[i]["content"]
             assistant_content = history[i + 1]["content"]
@@ -119,11 +119,9 @@ def format_chat_history():
 
 def process_json():
     canvas_outputs = None
-    print("~~~~~~~~~~~~~~~~~~~history:", history)
     try:
         if history:
             custom_history = format_chat_history()
-            print("~~~~~~~~~~~~~~~~~~~custom_history:", custom_history)
             last_assistant = custom_history[-1][1] if len(custom_history) > 0 else None
             print("~~~~~~~~~~~~~~~~~~~last_assistant:", last_assistant)
             canvas = sifchain_canvas.Canvas.from_bot_response(last_assistant)
@@ -132,6 +130,5 @@ def process_json():
         print('Last assistant response is not valid canvas:', e)
 
     print("~~~~~~~~~~~~~~~~~~~canvas_outputs:", canvas_outputs)
-
     # return canvas_outputs, gr.update(visible=canvas_outputs is not None), gr.update(interactive=len(history) > 0)
     return canvas_outputs

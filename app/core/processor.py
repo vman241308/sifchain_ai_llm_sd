@@ -86,7 +86,7 @@ def save_chat_history(role, content):
 
 def process_input(content, file):
     save_chat_history("user", content)
-    seed = torch.Generator(device="cuda").manual_seed(int(time.time() * 1000) % 2**32)
+    # seed = torch.Generator(device="cuda").manual_seed(int(time.time() * 1000) % 2**32)
     llm_generator = chat_fn(message=content, history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096)
     
     final_response = ""
@@ -123,9 +123,10 @@ def process_json():
         if history:
             custom_history = format_chat_history()
             last_assistant = custom_history[-1][1] if len(custom_history) > 0 else None
-            print("~~~~~~~~~~~~~~~~~~~last_assistant:", last_assistant)
             canvas = sifchain_canvas.Canvas.from_bot_response(last_assistant)
+            print("~~~~~~~~~~~~~~~~~~~canvas:", canvas)
             canvas_outputs = canvas.process()
+            print("~~~~~~~~~~~~~~~~~~~canvas_outputs:", canvas_outputs)
     except Exception as e:
         print('Last assistant response is not valid canvas:', e)
 

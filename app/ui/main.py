@@ -19,7 +19,6 @@ def create_ui():
                 file_upload = gr.File(label="Upload File")
                 submit_btn = gr.Button("Submit")
 
-
         submit_btn.click(
             fn=process_input,
             inputs=[input_text, file_upload],

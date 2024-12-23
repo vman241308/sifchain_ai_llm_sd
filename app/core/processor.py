@@ -29,7 +29,7 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
     np.random.seed(int(seed))
     torch.manual_seed(int(seed))
 
-    conversation = [{"role": "system", "content": sifchain_canvas.system_prompt}]
+    conversation = [{"role": "system", "content": "You are a helpful AI assistant"}]
 
     for user, assistant in history:
         if isinstance(user, str) and isinstance(assistant, str):

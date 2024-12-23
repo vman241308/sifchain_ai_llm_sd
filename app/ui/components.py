@@ -26,7 +26,6 @@ def create_json_column():
     with gr.Column():
         json_history = gr.Code(
             value=get_default_json(),
-            # value=[],
             language="json",
             interactive=True,
             lines=25,

@@ -29,7 +29,7 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
     np.random.seed(int(seed))
     torch.manual_seed(int(seed))
 
-    conversation = [{"role": "system", "content": "You are a helpful AI assistant"}]
+    conversation = [{"role": "system", "content": sifchain_canvas.system_prompt}]
 
     for user, assistant in history:
         if isinstance(user, str) and isinstance(assistant, str):
@@ -147,6 +147,7 @@ def process_input(content, file):
     for response_chunk, interrupter in llm_generator:
         final_response = response_chunk  # This will keep updating until the generator is exhausted
     
+    print("~~~~~~~~~~~~~~~~~~~final_response:", final_response)    
     save_chat_history("assistant", final_response)
 
     paired_history = []
@@ -159,7 +160,7 @@ def process_input(content, file):
             if len(temp_history) == 2:
                 paired_history.append(temp_history)
                 temp_history = []
-    
+    print("~~~~~~~~~~~~~~~~~~~paired_history:", paired_history)
     return paired_history
 
 def format_chat_history():

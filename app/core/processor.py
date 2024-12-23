@@ -119,5 +119,7 @@ def process_json():
     except Exception as e:
         print('Last assistant response is not valid canvas:', e)
 
+    print("~~~~~~~~~~~~~~~~~~~", canvas_outputs)
+
     # return canvas_outputs, gr.update(visible=canvas_outputs is not None), gr.update(interactive=len(history) > 0)
     return canvas_outputs

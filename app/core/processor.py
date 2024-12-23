@@ -25,11 +25,11 @@ llm_tokenizer = AutoTokenizer.from_pretrained(
     token=HF_TOKEN
 )
 
-def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: float, max_new_tokens: int) -> str:
+def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: float, max_new_tokens: int, system_prompt: str) -> str:
     np.random.seed(int(seed))
     torch.manual_seed(int(seed))
 
-    conversation = [{"role": "system", "content": sifchain_canvas.system_prompt}]
+    conversation = [{"role": "system", "content": system_prompt}]
 
     for user, assistant in history:
         if isinstance(user, str) and isinstance(assistant, str):
@@ -87,6 +87,7 @@ def save_chat_history(role, content):
 def process_input(content, file):
     save_chat_history("user", content)
     # seed = torch.Generator(device="cuda").manual_seed(int(time.time() * 1000) % 2**32)
+    system_prompt = "You are a helpful AI assistant"
     llm_generator = chat_fn(message=content, history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096)
     
     final_response = ""
@@ -120,12 +121,12 @@ def format_chat_history():
 
 def process_json():
     canvas_outputs = None
-    
+    system_prompt = sifchain_canvas.system_prompt
     try:
         if history:
             custom_history = format_chat_history()
             last_assistant = custom_history[-1][1] if len(custom_history) > 0 else None
-            llm_generator = chat_fn(message=last_assistant, history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096)
+            llm_generator = chat_fn(message=last_assistant, history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096, system_prompt=system_prompt)
             final_response = ""
             for response_chunk, interrupter in llm_generator:
                 final_response = response_chunk  # This will keep updating until the generator is exhausted

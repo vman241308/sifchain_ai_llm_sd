@@ -88,7 +88,7 @@ def process_input(content, file):
     save_chat_history("user", content)
     # seed = torch.Generator(device="cuda").manual_seed(int(time.time() * 1000) % 2**32)
     system_prompt = "You are a helpful AI assistant"
-    llm_generator = chat_fn(message=content, history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096)
+    llm_generator = chat_fn(message=content, history=history, seed=int(time.time() * 1000) % 2**32, temperature=0.7, top_p=1, max_new_tokens=4096, system_prompt=system_prompt)
     
     final_response = ""
     for response_chunk, interrupter in llm_generator:

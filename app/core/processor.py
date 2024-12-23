@@ -108,12 +108,21 @@ def process_input(content, file):
     
     return paired_history
 
+def format_chat_history():
+    formatted_history = []
+    for i in range(len(history), 2):
+        if i + 1 < len(history):
+            user_content = history[i]["content"]
+            assistant_content = history[i + 1]["content"]
+            formatted_history.append((user_content, assistant_content))
+    return formatted_history
+
 def process_json():
     canvas_outputs = None
     print("~~~~~~~~~~~~~~~~~~~history:", history)
     try:
         if history:
-            custom_history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
+            custom_history = format_chat_history()
             print("~~~~~~~~~~~~~~~~~~~custom_history:", custom_history)
             last_assistant = custom_history[-1][1] if len(custom_history) > 0 else None
             print("~~~~~~~~~~~~~~~~~~~last_assistant:", last_assistant)
